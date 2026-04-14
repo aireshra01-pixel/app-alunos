@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registro de Atendimentos</title>
+</head>
+<body>
+
+<h2>REGISTRO DE ATENDIMENTOS</h2>
+
+<!-- FORM PRINCIPAL -->
+<form action="/salvar" method="post">
+
+<label>Aluno:</label>
+<select name="aluno">
+    {% for aluno in alunos %}
+        <option value="{{ aluno.nome }}">{{ aluno.nome }}</option>
+    {% endfor %}
+</select>
+
+<br><br>
+
+<label>Data:</label>
+<input type="date" name="data">
+
+<label>Horário:</label>
+<input type="text" name="horario">
+
+<hr>
+
+<h3>Presença</h3>
+<label><input type="checkbox" id="compareceu" name="compareceu"> Compareceu</label>
+
+<h3>Comportamento</h3>
+
+<div>
+<label><input type="checkbox" class="opcao" name="atrasou"> Atrasou</label>
+<label><input type="checkbox" class="opcao" name="material"> Trouxe material</label>
+<label><input type="checkbox" class="opcao" name="atividades"> Executou atividades</label>
+</div>
+
+<br>
+
+<div>
+<label><input type="checkbox" class="opcao" name="combinados"> Cumpriu combinados</label>
+<label><input type="checkbox" class="opcao" name="agitacao"> Agitação</label>
+<label><input type="checkbox" class="opcao" name="desregulacao"> Desregulação</label>
+<label><input type="checkbox" class="opcao" name="cansaco"> Cansaço</label>
+</div>
+
+<br><br>
+
+<label>O que foi trabalhado:</label><br>
+<textarea name="trabalhado"></textarea><br><br>
+
+<label>Observações:</label><br>
+<textarea name="observacoes"></textarea><br><br>
+
+<label>Profissional responsável:</label><br>
+<input type="text" name="profissional"><br><br>
+
+<button type="submit">Salvar</button>
+
+</form>
+
+<hr>
+
+<!-- FORM SEPARADO -->
+<h3>Novo aluno</h3>
+<form action="/cadastrar" method="post">
+    <input type="text" name="nome" placeholder="Nome do aluno">
+    <button type="submit">Cadastrar</button>
+</form>
+
+<script>
+const compareceu = document.getElementById("compareceu");
+const opcoes = document.querySelectorAll(".opcao");
+
+function atualizarEstado() {
+    opcoes.forEach(op => {
+        op.disabled = !compareceu.checked;
+
+        if (!compareceu.checked) {
+            op.checked = false;
+        }
+    });
+}
+
+atualizarEstado();
+compareceu.addEventListener("change", atualizarEstado);
+</script>
+
+</body>
+</html>
